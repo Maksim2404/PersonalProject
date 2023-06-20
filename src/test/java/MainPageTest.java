@@ -7,5 +7,6 @@ public class MainPageTest extends BaseTest {
     public void  newTest() {
 
         openBaseUrl();
+        getDriver().getTitle();
     }
 }
