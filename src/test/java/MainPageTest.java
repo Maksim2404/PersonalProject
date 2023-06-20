@@ -8,5 +8,6 @@ public class MainPageTest extends BaseTest {
 
         openBaseUrl();
         getDriver().getTitle();
+        getDriver().navigate().to("https://redrover.school/");
     }
 }
