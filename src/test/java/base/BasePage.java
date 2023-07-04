@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BasePage {
-    private WebDriver driver;
+    private final WebDriver driver;
     private WebDriverWait webDriverWait20;
     private WebDriverWait webDriverWait10;
     private Actions actions;
