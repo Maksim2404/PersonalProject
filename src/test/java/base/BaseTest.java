@@ -34,6 +34,7 @@ public abstract class BaseTest {
     protected void beforeMethod(Method method, ITestResult result) {
 
         driver = BaseUtils.createDriver();
+        openBaseUrl();
 
         Reporter.log(ReportUtils.END_LINE, true);
         Reporter.log("TEST RUN", true);
@@ -55,7 +56,7 @@ public abstract class BaseTest {
 
     protected WebDriverWait getWait() {
         if (webDriverWait == null) {
-            webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(10));
         }
 
         return webDriverWait;
