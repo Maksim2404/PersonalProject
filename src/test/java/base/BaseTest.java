@@ -68,10 +68,6 @@ public abstract class BaseTest {
         return webDriverWait;
     }
 
-    public void sleep(int millis) throws InterruptedException {
-        Thread.sleep(millis);
-    }
-
     public void openBaseUrl() {
 
         getDriver().navigate().to(BASE_URL);
