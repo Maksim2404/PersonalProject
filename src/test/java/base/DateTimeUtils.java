@@ -7,7 +7,7 @@ public class DateTimeUtils {
 
     public static String getCurrentDateTime() {
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd, hh:mma");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, hh:mma");
 
         return dateFormat.format(date);
     }
@@ -23,32 +23,19 @@ public class DateTimeUtils {
         int numDays;
 
         switch (month) {
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
-                numDays = 31;
-                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11:
-                numDays = 30;
-                break;
-            case 2:
+            case 1, 3, 5, 7, 8, 10, 12 -> numDays = 31;
+            case 4, 6, 9, 11 -> numDays = 30;
+            case 2 -> {
                 if (((year % 4 == 0) &&
                         !(year % 100 == 0))
                         || (year % 400 == 0))
                     numDays = 29;
                 else
                     numDays = 28;
-                break;
-            default:
-
+            }
+            default -> {
                 return 0;
+            }
         }
 
         return numDays;
@@ -57,30 +44,42 @@ public class DateTimeUtils {
     public static String returnMonth(int number) {
         if (number > 0 && number < 13) {
             switch (number) {
-                case 1:
+                case 1 -> {
                     return "Jan";
-                case 2:
+                }
+                case 2 -> {
                     return "Feb";
-                case 3:
+                }
+                case 3 -> {
                     return "Mar";
-                case 4:
+                }
+                case 4 -> {
                     return "Apr";
-                case 5:
+                }
+                case 5 -> {
                     return "May";
-                case 6:
+                }
+                case 6 -> {
                     return "Jun";
-                case 7:
+                }
+                case 7 -> {
                     return "Jul";
-                case 8:
+                }
+                case 8 -> {
                     return "Aug";
-                case 9:
+                }
+                case 9 -> {
                     return "Sep";
-                case 10:
+                }
+                case 10 -> {
                     return "Oct";
-                case 11:
+                }
+                case 11 -> {
                     return "Nov";
-                case 12:
+                }
+                case 12 -> {
                     return "Dec";
+                }
             }
         }
 
@@ -90,30 +89,42 @@ public class DateTimeUtils {
     public static int returnMonth(String month) {
         if (month != null) {
             switch (month) {
-                case "Jan":
+                case "Jan" -> {
                     return 1;
-                case "Feb":
+                }
+                case "Feb" -> {
                     return 2;
-                case "Mar":
+                }
+                case "Mar" -> {
                     return 3;
-                case "Apr":
+                }
+                case "Apr" -> {
                     return 4;
-                case "May":
+                }
+                case "May" -> {
                     return 5;
-                case "Jun":
+                }
+                case "Jun" -> {
                     return 6;
-                case "Jul":
+                }
+                case "Jul" -> {
                     return 7;
-                case "Aug":
+                }
+                case "Aug" -> {
                     return 8;
-                case "Sep":
+                }
+                case "Sep" -> {
                     return 9;
-                case "Oct":
+                }
+                case "Oct" -> {
                     return 10;
-                case "Nov":
+                }
+                case "Nov" -> {
                     return 11;
-                case "Dec":
+                }
+                case "Dec" -> {
                     return 12;
+                }
             }
         }
 
@@ -123,20 +134,27 @@ public class DateTimeUtils {
     public static String returnDayOfTheWeek(int number) {
         if (number > 0 && number < 8) {
             switch (number) {
-                case 1:
+                case 1 -> {
                     return "Mon";
-                case 2:
+                }
+                case 2 -> {
                     return "Tue";
-                case 3:
+                }
+                case 3 -> {
                     return "Wed";
-                case 4:
+                }
+                case 4 -> {
                     return "Thu";
-                case 5:
+                }
+                case 5 -> {
                     return "Fri";
-                case 6:
+                }
+                case 6 -> {
                     return "Sat";
-                case 7:
+                }
+                case 7 -> {
                     return "Sun";
+                }
             }
         }
 
@@ -146,20 +164,27 @@ public class DateTimeUtils {
     public static int returnDayOfTheWeek(String day) {
         if (day != null) {
             switch (day) {
-                case "Mon":
+                case "Mon" -> {
                     return 1;
-                case "Tue":
+                }
+                case "Tue" -> {
                     return 2;
-                case "Wed":
+                }
+                case "Wed" -> {
                     return 3;
-                case "Thu":
+                }
+                case "Thu" -> {
                     return 4;
-                case "Fri":
+                }
+                case "Fri" -> {
                     return 5;
-                case "Sat":
+                }
+                case "Sat" -> {
                     return 6;
-                case "Sun":
+                }
+                case "Sun" -> {
                     return 7;
+                }
             }
         }
 
