@@ -17,7 +17,7 @@ public class MainPageTest extends BaseTest {
     }
 
     @Test
-    public void swichToBrowseLanguagesPageTest() {
+    public void switchToBrowseLanguagesPageTest() {
         MainPage mainPage = new MainPage(getDriver());
         mainPage.clickBrowseLanguagesTab();
 
