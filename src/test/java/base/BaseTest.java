@@ -1,5 +1,6 @@
 package base;
 
+import config.AtfConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
@@ -14,7 +15,12 @@ import java.time.Duration;
 
 public abstract class BaseTest {
 
-    private final static String BASE_URL = "https://99-bottles-of-beer.net/";
+    private static final String BASE_URL;
+
+    static {
+        AtfConfig.readConfig();
+        BASE_URL = AtfConfig.getAppUrl();
+    }
 
     private WebDriver driver;
     private WebDriverWait webDriverWait;
