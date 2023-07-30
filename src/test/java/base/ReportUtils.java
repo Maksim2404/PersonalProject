@@ -15,14 +15,11 @@ public class ReportUtils {
     private static String getTestStatus(ITestResult result) {
         int status = result.getStatus();
 
-        switch (status) {
-            case 1:
-                return "\u001B[32m" + "PASS" + "\u001B[0m";
-            case 2:
-                return "\u001B[31m" + "FAIL" + "\u001B[0m";
-            default:
-                return "UNDEFINED";
-        }
+        return switch (status) {
+            case 1 -> "\u001B[32m" + "PASS" + "\u001B[0m";
+            case 2 -> "\u001B[31m" + "FAIL" + "\u001B[0m";
+            default -> "UNDEFINED";
+        };
     }
 
     private static String getTestRunTime(ITestResult result) {
@@ -37,11 +34,9 @@ public class ReportUtils {
         String currentDate = "\tDate: "
                 + DateTimeUtils.getCurrentDateTime()
                 + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
-        String projectName = "\tProject: PersonalProjectDimaSergeyMaksimTina" + "\n";
-        String baseURL = "\tBASE_URL: " + BaseTest.getBaseUrl()
-                + "\t\t\t\t\t\t\t\t\t\t\t" + "\n";
+        String projectName = "\tProject: PersonalProject" + "\n";
 
-        return H_LINE + header + currentDate + projectName + baseURL + H_LINE;
+        return H_LINE + header + currentDate + projectName + H_LINE;
     }
 
     public static String getClassNameTestName(Method method, ITestResult result) {
