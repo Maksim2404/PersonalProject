@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class AtfConfigTest {
 
     @Test
-    public void canReadConfig() {
+    public void canReadConfigTest() {
         AtfConfig.init();
         String appUrl = AtfConfig.getAppUrl();
 

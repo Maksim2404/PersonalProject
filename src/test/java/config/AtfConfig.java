@@ -5,9 +5,29 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class AtfConfig {
+    private static final String PROPERTIES_FILE = "/local.properties";
     private static Properties properties;
 
+    private AtfConfig() {
+        // Private constructor to prevent instantiation
+    }
+
     public static void init() {
+        if (properties == null) {
+            properties = new Properties();
+            try (InputStream inputStream = AtfConfig.class.getResourceAsStream(PROPERTIES_FILE)) {
+                if (inputStream == null) {
+                    throw new RuntimeException("Failed to load properties file. Resource not found.");
+                }
+                properties.load(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to load properties file.", e);
+            }
+        }
+    }
+
+    /*public static void init() {
         if (properties == null) {
             properties = new Properties();
             try {
@@ -21,7 +41,7 @@ public class AtfConfig {
                 System.exit(1);
             }
         }
-    }
+    }*/
 
     public static String getAppUrl() {
         if (properties == null) {

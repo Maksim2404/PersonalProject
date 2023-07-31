@@ -65,6 +65,9 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.1.2</version>
                     <configuration>
+                        <additionalClasspathElements>
+                            <additionalClasspathElement>src/test/resources</additionalClasspathElement>
+                        </additionalClasspathElements>
                         <argLine>-Xmx2g</argLine>
                     </configuration>
                 </plugin>
