@@ -1,15 +1,13 @@
 package config;
 
-import base.BaseTest;
 import org.assertj.core.api.Assertions;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 public class AtfConfigTest {
 
     @Test
     public void canReadConfig() {
-        AtfConfig.readConfig();
+        AtfConfig.init();
         String appUrl = AtfConfig.getAppUrl();
 
         Assertions.assertThat(appUrl).isNotNull();
