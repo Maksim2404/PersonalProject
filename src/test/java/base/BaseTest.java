@@ -27,6 +27,7 @@ public abstract class BaseTest {
 
     public static String getBaseUrl() {
 
+        AtfConfig.init();
         return AtfConfig.getAppUrl();
         /* return BASE_URL;*/
     }
@@ -38,7 +39,6 @@ public abstract class BaseTest {
 
     @BeforeMethod
     protected void beforeMethod(Method method, ITestResult result) {
-
         driver = BaseUtils.createDriver();
         openBaseUrl();
 
