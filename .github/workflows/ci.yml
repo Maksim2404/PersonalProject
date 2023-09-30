@@ -21,6 +21,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: Set environment variable
+        run: echo "APP_URL=https://99-bottles-of-beer.net" >> $GITHUB_ENV
+
       - name: cache maven
         uses: actions/cache@v3
         with:

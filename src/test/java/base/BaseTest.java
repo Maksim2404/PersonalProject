@@ -15,30 +15,29 @@ import java.time.Duration;
 
 public abstract class BaseTest {
 
-    private static final String BASE_URL;
+    /*private static final String BASE_URL;
 
     static {
         AtfConfig.readConfig();
         BASE_URL = AtfConfig.getAppUrl();
-    }
+    }*/
 
     private WebDriver driver;
     private WebDriverWait webDriverWait;
 
     public static String getBaseUrl() {
 
-        return BASE_URL;
+        return System.getenv("APP_URL");
+        /* return BASE_URL;*/
     }
 
     @BeforeSuite
     protected void beforeSuite(ITestContext context) {
-
         Reporter.log(ReportUtils.getReportHeader(context), true);
     }
 
     @BeforeMethod
     protected void beforeMethod(Method method, ITestResult result) {
-
         driver = BaseUtils.createDriver();
         openBaseUrl();
 
@@ -70,6 +69,6 @@ public abstract class BaseTest {
 
     public void openBaseUrl() {
 
-        getDriver().navigate().to(BASE_URL);
+        getDriver().navigate().to(getBaseUrl());
     }
 }

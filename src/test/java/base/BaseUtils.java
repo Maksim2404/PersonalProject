@@ -44,9 +44,12 @@ public final class BaseUtils {
                         System.out.println("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found in src/test/resources/ directory.");
                         System.out.println("You need to create it from local.properties.TEMPLATE file.");
                         System.exit(1);
+                    } else {
+                        properties.load(inputStream);
                     }
-                    properties.load(inputStream);
-                } catch (IOException ignore) {
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
                 }
             }
         }
