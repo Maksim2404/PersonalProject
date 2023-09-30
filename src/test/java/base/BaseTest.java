@@ -27,8 +27,7 @@ public abstract class BaseTest {
 
     public static String getBaseUrl() {
 
-        AtfConfig.init();
-        return AtfConfig.getAppUrl();
+        return System.getenv("APP_URL");
         /* return BASE_URL;*/
     }
 

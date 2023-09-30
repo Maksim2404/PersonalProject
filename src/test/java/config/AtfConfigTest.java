@@ -7,9 +7,8 @@ public class AtfConfigTest {
 
     @Test
     public void canReadConfigTest() {
-        AtfConfig.init();
-        String appUrl = AtfConfig.getAppUrl();
 
+        String appUrl = System.getenv("APP_URL");
         Assertions.assertThat(appUrl).isNotNull();
     }
 }
