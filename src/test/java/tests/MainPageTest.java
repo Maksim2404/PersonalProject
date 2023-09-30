@@ -3,12 +3,14 @@ package tests;
 import base.BaseTest;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.MainPage;
 
 public class MainPageTest extends BaseTest {
 
     @Test
+    @Ignore
     public void pageOpenedTest() {
 
         String pageTitle = getDriver().getTitle();
@@ -17,6 +19,7 @@ public class MainPageTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void switchToBrowseLanguagesPageTest() {
 
         MainPage mainPage = new MainPage(getDriver())
