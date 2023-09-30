@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class MainPage extends BasePage {
 
-    @FindBy (xpath = "//li//a[text()='Browse Languages']")
+    @FindBy(xpath = "//li//a[text()='Browse Languages']")
     private WebElement browseLanguagesTab;
 
     public MainPage(WebDriver driver) {
@@ -15,8 +15,8 @@ public class MainPage extends BasePage {
     }
 
     public MainPage clickBrowseLanguagesTab() {
-    click(browseLanguagesTab);
+        click(browseLanguagesTab);
 
-    return this;
+        return this;
     }
 }
