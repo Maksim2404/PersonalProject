@@ -18,12 +18,21 @@ public class MainPageTest extends BaseTest {
 
     @Test
     public void switchToBrowseLanguagesPageTest() {
-        MainPage mainPage = new MainPage(getDriver());
-        mainPage.clickBrowseLanguagesTab();
+
+        MainPage mainPage = new MainPage(getDriver())
+                .clickBrowseLanguagesTab();
 
         String pageTextContext = getDriver().findElement(By.tagName("body")).getText().trim();
         String createdNewTitleName = "All languages starting with the letter A are shown, sorted by Language.";
 
         Assertions.assertThat(pageTextContext).contains(createdNewTitleName);
+    }
+
+    @Test
+    public void startPageTitleTest() {
+
+        String pageTitle = getDriver().getTitle();
+
+        Assertions.assertThat(pageTitle).isEqualTo("Homepage - Ultimate QA");
     }
 }
