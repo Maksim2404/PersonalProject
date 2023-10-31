@@ -20,7 +20,6 @@ public abstract class BaseTest {
     public static String getBaseUrl() {
 
         String baseUrl = System.getenv("APP_URL");
-        System.out.println(baseUrl);
         return baseUrl;
     }
 
@@ -64,11 +63,4 @@ public abstract class BaseTest {
 
         getDriver().navigate().to(getBaseUrl());
     }
-
-     /*private static final String BASE_URL;
-
-    static {
-        AtfConfig.readConfig();
-        BASE_URL = AtfConfig.getAppUrl();
-    }*/
 }
