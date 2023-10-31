@@ -14,20 +14,14 @@ import java.time.Duration;
 
 public abstract class BaseTest {
 
-    /*private static final String BASE_URL;
-
-    static {
-        AtfConfig.readConfig();
-        BASE_URL = AtfConfig.getAppUrl();
-    }*/
-
     private WebDriver driver;
     private WebDriverWait webDriverWait;
 
     public static String getBaseUrl() {
 
-        return System.getenv("APP_URL");
-        /* return BASE_URL;*/
+        String baseUrl = System.getenv("APP_URL");
+        System.out.println(baseUrl);
+        return baseUrl;
     }
 
     @BeforeSuite
@@ -70,4 +64,11 @@ public abstract class BaseTest {
 
         getDriver().navigate().to(getBaseUrl());
     }
+
+     /*private static final String BASE_URL;
+
+    static {
+        AtfConfig.readConfig();
+        BASE_URL = AtfConfig.getAppUrl();
+    }*/
 }

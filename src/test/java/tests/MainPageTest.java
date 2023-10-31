@@ -36,6 +36,8 @@ public class MainPageTest extends BaseTest {
 
         String pageTitle = getDriver().getTitle();
 
-        Assertions.assertThat(pageTitle).isEqualTo("Homepage - Ultimate QA");
+        System.out.println(pageTitle);
+
+        Assertions.assertThat(pageTitle).isEqualTo("Your Ultimate Convenience Store for Food, Drink, Fuel, and More | Wawa");
     }
 }
