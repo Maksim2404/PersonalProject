@@ -35,7 +35,7 @@ public class MainPageTest extends BaseTest {
     public void startPageTitleTest() {
 
         String pageTitle = getDriver().getTitle();
-        
+
         Assertions.assertThat(pageTitle).isEqualTo("Your Ultimate Convenience Store for Food, Drink, Fuel, and More | Wawa");
     }
 }
