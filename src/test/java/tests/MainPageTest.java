@@ -11,15 +11,6 @@ public class MainPageTest extends BaseTest {
 
     @Test
     @Ignore
-    public void pageOpenedTest() {
-
-        String pageTitle = getDriver().getTitle();
-
-        Assertions.assertThat(pageTitle).isEqualTo("99 Bottles of Beer | Start");
-    }
-
-    @Test
-    @Ignore
     public void switchToBrowseLanguagesPageTest() {
 
         MainPage mainPage = new MainPage(getDriver())
@@ -36,8 +27,7 @@ public class MainPageTest extends BaseTest {
 
         String pageTitle = getDriver().getTitle();
 
-        System.out.println(pageTitle);
-
-        Assertions.assertThat(pageTitle).isEqualTo("Your Ultimate Convenience Store for Food, Drink, Fuel, and More | Wawa");
+        Assertions.assertThat(pageTitle).isEqualTo("Your Ultimate Convenience Store for Food, Drink, Fuel, " +
+                "and More | Wawa");
     }
 }
