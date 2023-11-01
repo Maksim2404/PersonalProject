@@ -3,7 +3,7 @@
 *.class
 target/
 *.DS_Store
-local.properties
+*resources
 debug.log
 .vscode
 .settings
