@@ -16,12 +16,11 @@ public abstract class BaseTest {
 
     private WebDriver driver;
     private WebDriverWait webDriverWait;
+    private final static String APP_URL = "https://www.wawa.com/";
 
     public static String getBaseUrl() {
 
-        String baseUrl = System.getenv("APP_URL");
-        System.out.println(baseUrl);
-        return baseUrl;
+        return APP_URL;
     }
 
     @BeforeSuite
@@ -32,7 +31,7 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void beforeMethod(Method method, ITestResult result) {
         driver = BaseUtils.createDriver();
-        openBaseUrl();
+        //openBaseUrl();
 
         Reporter.log(ReportUtils.END_LINE, true);
         Reporter.log("TEST RUN", true);
@@ -43,6 +42,7 @@ public abstract class BaseTest {
     protected void afterMethod(Method method, ITestResult result) {
 
         Reporter.log(ReportUtils.getTestStatistics(method, result), true);
+
         driver.quit();
         webDriverWait = null;
     }
@@ -63,12 +63,6 @@ public abstract class BaseTest {
     public void openBaseUrl() {
 
         getDriver().navigate().to(getBaseUrl());
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(25));
     }
-
-     /*private static final String BASE_URL;
-
-    static {
-        AtfConfig.readConfig();
-        BASE_URL = AtfConfig.getAppUrl();
-    }*/
 }
