@@ -1,9 +1,5 @@
 package config;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 public class AtfConfig {
 
     private static final String APP_URL_ENV_VARIABLE = "APP_URL";

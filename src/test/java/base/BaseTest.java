@@ -16,11 +16,11 @@ public abstract class BaseTest {
 
     private WebDriver driver;
     private WebDriverWait webDriverWait;
-    private final static String APP_URL = "https://www.wawa.com/";
+    private final static String BASE_URL = "https://www.kraftylab.com/";
 
     public static String getBaseUrl() {
 
-        return APP_URL;
+        return BASE_URL;
     }
 
     @BeforeSuite

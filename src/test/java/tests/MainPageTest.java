@@ -37,6 +37,6 @@ public class MainPageTest extends BaseTest {
         WebDriverWait  webDriverWait = new WebDriverWait(getDriver(), Duration.ofSeconds(15));
         webDriverWait.until(ExpectedConditions.titleContains(pageTitle));
 
-        Assertions.assertThat(pageTitle).isEqualTo("Your Ultimate Convenience Store for Food, Drink, Fuel, and More | Wawa");
+        Assertions.assertThat(pageTitle).isEqualTo("KraftyLab | Fun Virtual Corporate Events Company");
     }
 }
