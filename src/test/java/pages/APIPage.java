@@ -7,7 +7,4 @@ public class APIPage extends BasePage {
     protected APIPage(WebDriver driver) {
         super(driver);
     }
-
-
-
 }
