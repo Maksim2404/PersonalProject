@@ -5,7 +5,7 @@ import io.restassured.RestAssured;
 import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 
-public class APITest extends BaseTest {
+public class APIMaxTrainingTest extends BaseTest {
 
     /*API tests based on three principles:
     - given - all input details
