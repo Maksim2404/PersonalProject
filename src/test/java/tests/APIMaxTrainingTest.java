@@ -3,45 +3,99 @@ package tests;
 import base.BaseTest;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
-import pages.APIPage;
+import pages.apii.Payloads;
+import pages.apii.ReUsableMethods;
 
-import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 public class APIMaxTrainingTest extends BaseTest {
 
     /*API tests based on three principles:
     - given - all input details
     - when - submit the API - resource, http methods
-    - then - validate the response
-    *//*
-    first test - validate if API place API is working as expected*/
+    - then - validate the response*/
     @Test
-    public void addPlaceTest() {
+    public void addUpdateGetPlaceTest() {
 
+        /*Add Place*/
         RestAssured.baseURI = "https://rahulshettyacademy.com";
         String response =
                 given().log().all()
                         .queryParam("key", "qaclick123")
                         .header("Content-Type", "application/json")
-                        .body(APIPage.addPlace())
+                        .body(Payloads.addPlace())
                         .when().post("maps/api/place/add/json")
                         .then().assertThat().statusCode(200).body("scope", equalTo("APP"))
                         .header("server", "Apache/2.4.52 (Ubuntu)")
                         .extract().response().asString();
 
-        System.out.println(response);
-
         /*For parsing JSON*/
         JsonPath js = new JsonPath(response);
         String placeId = js.getString("place_id");
-        System.out.println(placeId);
+
+        /*Update Place with New Address */
+        String newAddress = "Austin, Texas";
+
+        given().log().all()
+                .queryParam("key", "qaclick123")
+                .header("Content-Type", "application/json")
+                .body("{\n" +
+                        "\"place_id\":\"" + placeId + "\",\n" +
+                        "\"address\":\"" + newAddress + "\",\n" +
+                        "\"key\":\"qaclick123\"\n" +
+                        "}")
+                .when()
+                .put("maps/api/place/update/json")
+                .then().assertThat().log().all().statusCode(200)
+                .body("msg", equalTo("Address successfully updated"));
+
+        /*Get Place*/
+        String getPlaceResponse = given().log().all()
+                .queryParam("key", "qaclick123").queryParam("place_id", placeId)
+                .when()
+                .get("maps/api/place/get/json")
+                .then().assertThat().log().all().statusCode(200)
+                .extract().response().asString();
+
+        JsonPath js1 = ReUsableMethods.rawToJson(getPlaceResponse);
+        String actualAddress = js1.getString("address");
+
+        Assertions.assertThat(newAddress).isEqualTo(actualAddress);
     }
 
-    /*Add place -> Update Place with New Address -> Get place to validate if new address is present in response*/
     @Test
-    public void updatePlaceWithNewAddressTest() {
+    public void howToParseJsonTest() {
 
+         /*1. Print No of courses returned by API
+           2.Print Purchase Amount
+           3. Print Title of the first course
+           4. Print All course titles and their respective Prices
+           5. Print no of copies sold by RPA Course
+           6. Verify if Sum of all Course prices matches with Purchase Amount*/
+
+        JsonPath js = new JsonPath(Payloads.coursePrice());
+
+        /*Printing number of courses by API*/
+        int count = js.getInt("courses.size()");
+        System.out.println(count);
+
+        /*Printing purchase amount*/
+        int totalAmount = js.getInt("dashboard.purchaseAmount");
+        System.out.println(totalAmount);
+
+        /*Print Title of the first course*/
+        String titleNameOfFirstCourse = js.get("courses[0].title");
+        System.out.println(titleNameOfFirstCourse);
+
+        /*Print All course titles and their respective Prices*/
+        for (int i = 0; i < count; i++) {
+            String courseTitles = js.get("courses[" + i + "].title");
+            System.out.println(js.get("courses[" + i + "].price").toString());
+
+            System.out.println(courseTitles);
+        }
     }
 }
