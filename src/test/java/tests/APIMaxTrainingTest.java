@@ -97,5 +97,55 @@ public class APIMaxTrainingTest extends BaseTest {
 
             System.out.println(courseTitles);
         }
+
+        /*Print no of copies sold by RPA Course*/
+        for (int i = 0; i < count; i++) {
+
+            String courseTitles = js.get("courses[" + i + "].title");
+            if (courseTitles.equalsIgnoreCase("RPA")) {
+
+                int copies = js.get("courses[" + i + "].copies");
+                System.out.println(copies);
+                break;
+            }
+        }
+    }
+
+    @Test
+    public void verifySumAllCoursePricesMatchesWithPurchaseAmountTest() {
+
+        JsonPath js = new JsonPath(Payloads.coursePrice());
+        int count = js.getInt("courses.size()");
+        int expectedTotalAmount = js.getInt("dashboard.purchaseAmount");
+        int sum = 0;
+
+        for (int i = 0; i < count; i++) {
+
+            int price = js.getInt("courses[" + i + "].price");
+            int copies = js.getInt("courses[" + i + "].copies");
+            int amount = price * copies;
+            sum = sum + amount;
+        }
+        int actualTotal = sum;
+
+        Assertions.assertThat(expectedTotalAmount).isEqualTo(actualTotal);
+    }
+
+    /*Dynamic JSON*/
+    @Test
+    public void addBookTest() {
+
+        RestAssured.baseURI = "http://216.10.245.166";
+
+        String response = given().log().all().header("Content-Type", "application/json")
+                .body(Payloads.addBook())
+                .when()
+                .post("/Library/Addbook.php")
+                .then().log().all()
+                .assertThat().statusCode(200).extract().response().asString();
+
+        JsonPath js = ReUsableMethods.rawToJson(response);
+        String id = js.get("ID");
+        System.out.println(id);
     }
 }
