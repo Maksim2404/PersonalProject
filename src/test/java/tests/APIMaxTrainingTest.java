@@ -131,18 +131,20 @@ public class APIMaxTrainingTest extends BaseTest {
         Assertions.assertThat(expectedTotalAmount).isEqualTo(actualTotal);
     }
 
-    /*Dynamic JSON*/
+    /*Handling Dynamic JSON Payloads with Parameterization*/
     @Test
     public void addBookTest() {
 
         RestAssured.baseURI = "http://216.10.245.166";
 
-        String response = given().log().all().header("Content-Type", "application/json")
-                .body(Payloads.addBook())
-                .when()
-                .post("/Library/Addbook.php")
-                .then().log().all()
-                .assertThat().statusCode(200).extract().response().asString();
+        String response =
+                given().log().all()
+                        .header("Content-Type", "application/json")
+                        .body(Payloads.addBook())
+                        .when()
+                        .post("/Library/Addbook.php")
+                        .then().log().all()
+                        .assertThat().statusCode(200).extract().response().asString();
 
         JsonPath js = ReUsableMethods.rawToJson(response);
         String id = js.get("ID");
