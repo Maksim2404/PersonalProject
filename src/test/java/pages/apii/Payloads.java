@@ -80,10 +80,10 @@ public class Payloads extends BasePage {
                 "}";
     }
 
-    public static String addBook() {
+    public static String addBook(String isbn, String aisle) {
 
         String payload =
-                "{\n\"name\":\"Learn Appium Automation with Java\",\n\"isbn\":\"bcd\",\n\"aisle\":\"29sdfa26\",\n\"author\":\"John foer\"\n}\n";
+                "{\n\"name\":\"Learn Appium Automation with Java\",\n\"isbn\":\"" + isbn + "\",\n\"aisle\":\"" + aisle + "\",\n\"author\":\"John foer\"\n}\n";
         return payload;
     }
 }
