@@ -17,7 +17,10 @@ public class APIMaxTrainingTest extends BaseTest {
     /*API tests based on three principles:
     - given - all input details
     - when - submit the API - resource, http methods
-    - then - validate the response*/
+    - then - validate the response
+    Content of the file to String -> content of the file can convert into Byte -> Byte data to String
+    to do that you need: .body(new String(Files.readAllBytes(Paths.get("..."))))*/
+
     @Test
     public void addUpdateGetPlaceTest() {
 
