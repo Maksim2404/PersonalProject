@@ -1,4 +1,4 @@
-package pages.apii;
+package pages.api;
 
 import base.BasePage;
 import io.restassured.path.json.JsonPath;

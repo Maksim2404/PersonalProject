@@ -2,12 +2,15 @@ package tests;
 
 import base.BaseTest;
 import io.restassured.RestAssured;
+import io.restassured.filter.session.SessionFilter;
 import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.apii.Payloads;
-import pages.apii.ReUsableMethods;
+import pages.api.Payloads;
+import pages.api.ReUsableMethods;
+
+import java.io.File;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -161,5 +164,79 @@ public class APIMaxTrainingTest extends BaseTest {
         /*array - collection of elements
         multidimensional array - collection of arrays*/
         return new Object[][]{{"qwerty", "123"}, {"zxc", "321"}, {"asd", "456"}};
+    }
+
+    @Test
+    public void addCommentJiraTest() {
+
+        RestAssured.baseURI = "http://localhost:8080";
+
+        SessionFilter session = new SessionFilter();
+
+        /*Login implementation*/
+        String response =
+                given()
+                        .header("Content-Type", "application/json")
+                        .body("{ \"username\": \"Admin\", \"password\": \"admin\" }")
+                        .log().all()
+                        .filter(session)
+                        .when()
+                        .post("/rest/auth/1/session")
+                        .then()
+                        .log().all()
+                        .extract()
+                        .response().asString();
+
+        /*Add comment implementation*/
+        given()
+                .pathParam("id", "10005")
+                .log().all()
+                .header("Content-Type", "application/json")
+                .body("{\n" +
+                        "    \"body\": \"This is my first comment!\",\n" +
+                        "    \"visibility\": {\n" +
+                        "        \"type\": \"role\",\n" +
+                        "        \"value\": \"Administrators\"\n" +
+                        "    }\n" +
+                        "}")
+                .filter(session)
+                .when()
+                .post("/rest/api/2/issue/{id}/comment")
+                .then()
+                .log().all()
+                .assertThat().statusCode(201);
+    }
+
+    @Test
+    public void addAttachmentJiraTest() {
+
+        RestAssured.baseURI = "http://localhost:8080";
+
+        SessionFilter session = new SessionFilter();
+
+        String response =
+                given()
+                        .header("Content-Type", "application/json")
+                        .body("{ \"username\": \"Admin\", \"password\": \"admin\" }")
+                        .log().all()
+                        .filter(session)
+                        .when()
+                        .post("/rest/auth/1/session")
+                        .then()
+                        .log().all()
+                        .extract()
+                        .response().asString();
+
+        given()
+                .header("X-Atlassian-Token", "no-check")
+                .filter(session)
+                .pathParam("id", "10005")
+                .header("Content-Type", "multipart/form-data")
+                .multiPart("file", new File("C:\\Users\\Maksim Meleshkin\\JavaProjects\\PersonalProject\\src\\test\\java\\pages\\api\\jira"))
+                .when()
+                .post("/rest/api/2/issue/{id}/attachments")
+                .then()
+                .log().all()
+                .assertThat().statusCode(200);
     }
 }
