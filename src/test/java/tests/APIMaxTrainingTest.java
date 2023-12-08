@@ -320,37 +320,37 @@ public class APIMaxTrainingTest extends BaseTest {
         }
     }
 
-public static class APIMaxTrainingPage extends BasePage {
-    @FindBy(xpath = "//input[@autocomplete='username']")
-    private WebElement usernameField;
+    public static class APIMaxTrainingPage extends BasePage {
+        @FindBy(xpath = "//input[@autocomplete='username']")
+        private WebElement usernameField;
 
-    @FindBy(xpath = "//input[@name='password']")
-    private WebElement passwordField;
+        @FindBy(xpath = "//input[@name='password']")
+        private WebElement passwordField;
 
-    protected APIMaxTrainingPage(WebDriver driver) {
-        super(driver);
+        protected APIMaxTrainingPage(WebDriver driver) {
+            super(driver);
+        }
+
+        public APIMaxTrainingPage inputValueToUserNameField(String text) {
+            input(text, usernameField);
+            return this;
+        }
+
+        public APIMaxTrainingPage clickEnterAfterFillingUsernameField() {
+            clickEnter(usernameField);
+            return this;
+        }
+
+        public APIMaxTrainingPage inputValueToPasswordField(String text) {
+            input(text, passwordField);
+            return this;
+        }
+
+        public APIMaxTrainingPage clickEnterAfterFillingPasswordField() {
+            clickEnter(passwordField);
+            return this;
+        }
     }
-
-    public APIMaxTrainingPage inputValueToUserNameField(String text) {
-        input(text, usernameField);
-        return this;
-    }
-
-    public APIMaxTrainingPage clickEnterAfterFillingUsernameField() {
-        clickEnter(usernameField);
-        return this;
-    }
-
-    public APIMaxTrainingPage inputValueToPasswordField(String text) {
-        input(text, passwordField);
-        return this;
-    }
-
-    public APIMaxTrainingPage clickEnterAfterFillingPasswordField() {
-        clickEnter(passwordField);
-        return this;
-    }
-}
 
     @Test
     public void oAuthAuthorizationGrantTypeTest() throws InterruptedException {
@@ -368,7 +368,7 @@ public static class APIMaxTrainingPage extends BasePage {
 
         String url = "https://rahulshettyacademy.com/getCourse.php?state=verifyfjdss&code=4%2FvAHBQUZU6o4WJ719NrGBzSELBFVBI9XbxvOtYpmYpeV47bFVExkaxWaF_XR14PHtTZf7ILSEeamywJKwo_BYs9M&scope=email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&session_state=0c32992f0d47e93d273922018ade42d1072b9d1f..a35c&prompt=none#";
 
-        String partialCode =  url.split("code=")[1];
+        String partialCode = url.split("code=")[1];
         String code = partialCode.split("&scope")[0];
         System.out.println(code);
 
