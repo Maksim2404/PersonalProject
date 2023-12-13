@@ -9,14 +9,16 @@ import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.devtools.v109.input.Input;
 import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.api.Payloads;
 import pages.api.ReUsableMethods;
+import pages.api.pojo.APIPage;
+import pages.api.pojo.GetCoursePage;
 
 import java.io.File;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -381,19 +383,30 @@ public class APIMaxTrainingTest extends BaseTest {
                 .queryParams("grant_type", "authorization_code")
                 .when()
                 .log().all()
-                .post("https://www.googleapis.com/oauth2/v4/token")
-                .asString();
+                .post("https://www.googleapis.com/oauth2/v4/token").asString();
 
         JsonPath js = new JsonPath(getAccessTokenResponse);
         String accessToken = js.getString("access_token");
 
-        String response = given()
+
+        GetCoursePage gc = given()
                 .queryParam("access_token", accessToken)
                 .expect().defaultParser(Parser.JSON)
                 .when()
-                .get("https://rahulshettyacademy.com/getCourse.php")
-                .asString();
+                .get("https://rahulshettyacademy.com/getCourse.php").as(GetCoursePage.class);
 
-        System.out.println(response);
+        System.out.println(gc.getLinkedin());
+
+        /*To get particular course title*/
+        System.out.println(gc.getCourses().getApi().get(1).getCourseTitle());
+
+        /*To make the previous action dynamic*/
+        List<APIPage> apiCources = gc.getCourses().getApi();
+        for (int i = 0; i < apiCources.size(); i++) {
+
+            if (apiCources.get(i).equals("SoapUI Webservices testing")) {
+                System.out.println(apiCources.get(i).getPrice());
+            }
+        }
     }
 }
