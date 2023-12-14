@@ -16,8 +16,11 @@ import pages.api.Payloads;
 import pages.api.ReUsableMethods;
 import pages.api.pojo.APIPage;
 import pages.api.pojo.GetCoursePage;
+import pages.api.pojo.WebAutomationPage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -357,6 +360,8 @@ public class APIMaxTrainingTest extends BaseTest {
     @Test
     public void oAuthAuthorizationGrantTypeTest() throws InterruptedException {
 
+        String[] coursesTitles = {"Selenium Webdriver Java", "Protractor", "Cypress"};
+
         /*final String userName = "maksamarskiy@gmail.com";
         final String password = "";
 
@@ -408,5 +413,16 @@ public class APIMaxTrainingTest extends BaseTest {
                 System.out.println(apiCources.get(i).getPrice());
             }
         }
+
+        /*Get Courses name of webAutomation*/
+        ArrayList<String> a = new ArrayList<String>();
+
+        List<WebAutomationPage> w = gc.getCourses().getWebAutomation();
+        for (int j = 0; j < w.size(); j++) {
+            a.add(w.get(j).getCourseTitle());
+        }
+        List<String> expectedList = Arrays.asList(coursesTitles);
+
+        Assertions.assertThat(a).isEqualTo(expectedList);
     }
 }
