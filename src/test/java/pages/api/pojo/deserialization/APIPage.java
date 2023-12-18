@@ -1,4 +1,4 @@
-package pages.api.pojo;
+package pages.api.pojo.deserialization;
 
 import base.BasePage;
 import org.openqa.selenium.WebDriver;

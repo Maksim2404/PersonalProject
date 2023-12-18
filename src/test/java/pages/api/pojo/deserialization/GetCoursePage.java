@@ -1,7 +1,8 @@
-package pages.api.pojo;
+package pages.api.pojo.deserialization;
 
 import base.BasePage;
 import org.openqa.selenium.WebDriver;
+import pages.api.pojo.deserialization.CoursesPage;
 
 public class GetCoursePage extends BasePage {
 

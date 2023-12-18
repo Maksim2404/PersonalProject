@@ -6,6 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.filter.session.SessionFilter;
 import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,9 +15,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.api.Payloads;
 import pages.api.ReUsableMethods;
-import pages.api.pojo.APIPage;
-import pages.api.pojo.GetCoursePage;
-import pages.api.pojo.WebAutomationPage;
+import pages.api.pojo.deserialization.APIPage;
+import pages.api.pojo.deserialization.GetCoursePage;
+import pages.api.pojo.deserialization.WebAutomationPage;
+import pages.api.serialization.AddPlacePage;
+import pages.api.serialization.LocationPage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -424,5 +427,43 @@ public class APIMaxTrainingTest extends BaseTest {
         List<String> expectedList = Arrays.asList(coursesTitles);
 
         Assertions.assertThat(a).isEqualTo(expectedList);
+    }
+
+    @Test
+    public void TestSerializationMethod() {
+
+        RestAssured.baseURI = "https://rahulshettyacademy.com";
+
+        AddPlacePage p = new AddPlacePage(getDriver());
+        p.setAccuracy(50);
+        p.setAddress("20, site layout, cohen 09");
+        p.setLanguage("French-IN");
+        p.setPhone_number("(+91) 983 893 3937");
+        p.setName("Frontline house");
+        p.setWebsite("https://rahulshettyacademy.com");
+
+        List<String> myList = new ArrayList<String>();
+        myList.add("shoe park");
+        myList.add("shop");
+        p.setTypes(myList);
+
+        LocationPage l = new LocationPage(getDriver());
+        l.setLat(-38.383494);
+        l.setLng(33.427362);
+        p.setLocation(l);
+
+        Response response = given()
+                .queryParam("key", "qaclick123")
+                .body(p)
+                .when()
+                .post("/maps/api/place/add/json")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        String responseToString = response.asString();
+        System.out.println(responseToString);
     }
 }

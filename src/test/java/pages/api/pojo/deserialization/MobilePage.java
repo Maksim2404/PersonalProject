@@ -1,14 +1,14 @@
-package pages.api.pojo;
+package pages.api.pojo.deserialization;
 
 import base.BasePage;
 import org.openqa.selenium.WebDriver;
 
-public class WebAutomationPage extends BasePage {
+public class MobilePage extends BasePage {
 
     private String courseTitle;
     private String price;
 
-    protected WebAutomationPage(WebDriver driver) {
+    protected MobilePage(WebDriver driver) {
         super(driver);
     }
 
