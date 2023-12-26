@@ -3,10 +3,15 @@ package tests;
 import base.BasePage;
 import base.BaseTest;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.session.SessionFilter;
+import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -361,7 +366,7 @@ public class APIMaxTrainingTest extends BaseTest {
     }
 
     @Test
-    public void oAuthAuthorizationGrantTypeTest() throws InterruptedException {
+    public void oAuthAuthorizationGrantTypeTest() {
 
         String[] coursesTitles = {"Selenium Webdriver Java", "Protractor", "Cypress"};
 
@@ -464,6 +469,57 @@ public class APIMaxTrainingTest extends BaseTest {
                 .response();
 
         String responseToString = response.asString();
+        System.out.println(responseToString);
+    }
+
+    @Test
+    public void TestRequestResponseSpecBuilder() {
+
+        RestAssured.baseURI = "https://rahulshettyacademy.com";
+
+        AddPlacePage p = new AddPlacePage(getDriver());
+        p.setAccuracy(50);
+        p.setAddress("20, site layout, cohen 09");
+        p.setLanguage("French-IN");
+        p.setPhone_number("(+91) 983 893 3937");
+        p.setName("Frontline house");
+        p.setWebsite("https://rahulshettyacademy.com");
+
+        List<String> myList = new ArrayList<String>();
+        myList.add("shoe park");
+        myList.add("shop");
+        p.setTypes(myList);
+
+        LocationPage l = new LocationPage(getDriver());
+        l.setLat(-38.383494);
+        l.setLng(33.427362);
+        p.setLocation(l);
+
+        RequestSpecification reqSpec = new RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
+                .setBaseUri("https://rahulshettyacademy.com")
+                .addQueryParam("key", "qaclick123")
+                .build();
+
+        ResponseSpecification resSpec = new ResponseSpecBuilder()
+                .expectStatusCode(200)
+                .expectContentType(ContentType.JSON)
+                .build();
+
+        RequestSpecification response = given()
+                .spec(reqSpec)
+                .body(p);
+
+        Response res =
+                response
+                        .when()
+                        .post("/maps/api/place/add/json")
+                        .then()
+                        .spec(resSpec)
+                        .extract()
+                        .response();
+
+        String responseToString = res.asString();
         System.out.println(responseToString);
     }
 }
