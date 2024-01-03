@@ -20,6 +20,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.api.Payloads;
 import pages.api.ReUsableMethods;
+import pages.api.ecommerce.LoginRequestPage;
+import pages.api.ecommerce.LoginResponsePage;
 import pages.api.pojo.deserialization.APIPage;
 import pages.api.pojo.deserialization.GetCoursePage;
 import pages.api.pojo.deserialization.WebAutomationPage;
@@ -521,5 +523,33 @@ public class APIMaxTrainingTest extends BaseTest {
 
         String responseToString = res.asString();
         System.out.println(responseToString);
+    }
+
+    @Test
+    public void TestECommerce() {
+
+        RequestSpecification req = new RequestSpecBuilder()
+                .setBaseUri("https://rahulshettyacademy.com")
+                .setContentType(ContentType.JSON)
+                .build();
+
+        LoginRequestPage loginRequestPage = new LoginRequestPage(getDriver());
+        loginRequestPage.setUserEmail("makssamarskiy@iclolud.com");
+        loginRequestPage.setUserPassword("mL7ZeigyaUkh");
+
+        RequestSpecification reqLogin = given()
+                .log().all()
+                .spec(req)
+                .body(loginRequestPage);
+
+        LoginResponsePage loginResponsePage = reqLogin
+                .when()
+                .post("/api/ecom/auth/login")
+                .then()
+                .log().all()
+                .extract().response().as(LoginResponsePage.class);
+
+        System.out.println(loginResponsePage.getToken());
+        System.out.println(loginResponsePage.getUserId());
     }
 }
