@@ -16,12 +16,15 @@ import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.api.Payloads;
 import pages.api.ReUsableMethods;
 import pages.api.ecommerce.LoginRequestPage;
 import pages.api.ecommerce.LoginResponsePage;
+import pages.api.ecommerce.OrderDetail;
+import pages.api.ecommerce.Orders;
 import pages.api.pojo.deserialization.APIPage;
 import pages.api.pojo.deserialization.GetCoursePage;
 import pages.api.pojo.deserialization.WebAutomationPage;
@@ -164,10 +167,28 @@ public class APIMaxTrainingTest extends BaseTest {
         SessionFilter session = new SessionFilter();
 
         /*Login implementation*/
-        String response = given().header("Content-Type", "application/json").body("{ \"username\": \"Admin\", \"password\": \"admin\" }").log().all().filter(session).when().post("/rest/auth/1/session").then().log().all().extract().response().asString();
+        String response = given()
+                .header("Content-Type", "application/json")
+                .body("{ \"username\": \"Admin\", \"password\": \"admin\" }")
+                .log().all()
+                .filter(session)
+                .when()
+                .post("/rest/auth/1/session")
+                .then()
+                .log().all()
+                .extract()
+                .response().asString();
 
         /*Add comment implementation*/
-        given().pathParam("id", "10005").log().all().header("Content-Type", "application/json").body("{\n" + "    \"body\": \"This is my first comment!\",\n" + "    \"visibility\": {\n" + "        \"type\": \"role\",\n" + "        \"value\": \"Administrators\"\n" + "    }\n" + "}").filter(session).when().post("/rest/api/2/issue/{id}/comment").then().log().all().assertThat().statusCode(201);
+        given()
+                .pathParam("id", "10005")
+                .log().all()
+                .header("Content-Type", "application/json")
+                .body("{\n" + "    \"body\": \"This is my first comment!\",\n" + "    \"visibility\": {\n" + "        \"type\": \"role\",\n" + "        \"value\": \"Administrators\"\n" + "    }\n" + "}")
+                .filter(session).when().post("/rest/api/2/issue/{id}/comment")
+                .then()
+                .log().all()
+                .assertThat().statusCode(201);
     }
 
     @Test
@@ -177,10 +198,28 @@ public class APIMaxTrainingTest extends BaseTest {
 
         SessionFilter session = new SessionFilter();
 
-        String response = given().header("Content-Type", "application/json").body("{ \"username\": \"Admin\", \"password\": \"admin\" }").log().all().filter(session).when().post("/rest/auth/1/session").then().log().all().extract().response().asString();
+        String response = given()
+                .header("Content-Type", "application/json")
+                .body("{ \"username\": \"Admin\", \"password\": \"admin\" }")
+                .log().all()
+                .filter(session)
+                .when()
+                .post("/rest/auth/1/session")
+                .then()
+                .log().all()
+                .extract()
+                .response().asString();
 
         /*Add attachment implementation*/
-        given().header("X-Atlassian-Token", "no-check").filter(session).pathParam("id", "10005").header("Content-Type", "multipart/form-data").multiPart("file", new File("C:\\Users\\Maksim Meleshkin\\JavaProjects\\PersonalProject\\src\\test\\java\\pages\\api\\jira")).when().post("/rest/api/2/issue/{id}/attachments").then().log().all().assertThat().statusCode(200);
+        given()
+                .header("X-Atlassian-Token", "no-check")
+                .filter(session).pathParam("id", "10005")
+                .header("Content-Type", "multipart/form-data")
+                .multiPart("file", new File("C:\\Users\\Maksim Meleshkin\\JavaProjects\\PersonalProject\\src\\test\\java\\pages\\api\\jira")).when().post("/rest/api/2/issue/{id}/attachments")
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
     }
 
     @Test
@@ -192,18 +231,51 @@ public class APIMaxTrainingTest extends BaseTest {
 
         SessionFilter session = new SessionFilter();
 
-        String response = given().header("Content-Type", "application/json").body("{ \"username\": \"Admin\", \"password\": \"admin\" }").log().all().filter(session).when().post("/rest/auth/1/session").then().log().all().extract().response().asString();
+        String response = given()
+                .header("Content-Type", "application/json")
+                .body("{ \"username\": \"Admin\", \"password\": \"admin\" }")
+                .log().all().filter(session).when().post("/rest/auth/1/session")
+                .then()
+                .log().all()
+                .extract()
+                .response()
+                .asString();
 
         String expectedMessage = "Hi, How are you?";
 
         /*Add comment implementation*/
-        String addCommentResponse = given().pathParam("id", "10005").log().all().header("Content-Type", "application/json").body("{\n" + "    \"body\": \"" + expectedMessage + "\",\n" + "    \"visibility\": {\n" + "        \"type\": \"role\",\n" + "        \"value\": \"Administrators\"\n" + "    }\n" + "}").filter(session).when().post("/rest/api/2/issue/{id}/comment").then().log().all().assertThat().statusCode(201).extract().response().asString();
+        String addCommentResponse = given()
+                .pathParam("id", "10005")
+                .log().all()
+                .header("Content-Type", "application/json")
+                .body("{\n" + "    \"body\": \"" + expectedMessage + "\",\n" + "    \"visibility\": {\n" + "        \"type\": \"role\",\n" + "        \"value\": \"Administrators\"\n" + "    }\n" + "}")
+                .filter(session)
+                .when()
+                .post("/rest/api/2/issue/{id}/comment")
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(201)
+                .extract()
+                .response()
+                .asString();
 
         JsonPath js = new JsonPath(addCommentResponse);
         String commentId = js.getString("id");
 
         /*Get Issue implementation*/
-        String issueDetails = given().filter(session).pathParam("id", "10005").queryParam("fields", "comment").log().all().when().get("/rest/api/2/issue/{id}").then().log().all().extract().response().asString();
+        String issueDetails = given()
+                .filter(session)
+                .pathParam("id", "10005")
+                .queryParam("fields", "comment")
+                .log().all()
+                .when()
+                .get("/rest/api/2/issue/{id}")
+                .then()
+                .log().all()
+                .extract()
+                .response()
+                .asString();
 
         JsonPath js1 = new JsonPath(issueDetails);
         int commentCount = js1.getInt("fields.comment.comments.size()");
@@ -270,13 +342,26 @@ public class APIMaxTrainingTest extends BaseTest {
         String code = partialCode.split("&scope")[0];
         System.out.println(code);
 
-        String getAccessTokenResponse = given().urlEncodingEnabled(false).queryParams("code", code).queryParams("client_id", "692183103107-p0m7ent2hk7suguv4vq22hjcfhcr43pj.apps.googleusercontent.com").queryParams("client_secret", "erZOWM9g3UtwNRj340YYaK_W").queryParams("redirect_uri", "https://rahulshettyacademy.com/getCourse.php").queryParams("grant_type", "authorization_code").when().log().all().post("https://www.googleapis.com/oauth2/v4/token").asString();
+        String getAccessTokenResponse = given()
+                .urlEncodingEnabled(false)
+                .queryParams("code", code)
+                .queryParams("client_id", "692183103107-p0m7ent2hk7suguv4vq22hjcfhcr43pj.apps.googleusercontent.com")
+                .queryParams("client_secret", "erZOWM9g3UtwNRj340YYaK_W")
+                .queryParams("redirect_uri", "https://rahulshettyacademy.com/getCourse.php")
+                .queryParams("grant_type", "authorization_code")
+                .when()
+                .log().all()
+                .post("https://www.googleapis.com/oauth2/v4/token").asString();
 
         JsonPath js = new JsonPath(getAccessTokenResponse);
         String accessToken = js.getString("access_token");
 
 
-        GetCoursePage gc = given().queryParam("access_token", accessToken).expect().defaultParser(Parser.JSON).when().get("https://rahulshettyacademy.com/getCourse.php").as(GetCoursePage.class);
+        GetCoursePage gc = given()
+                .queryParam("access_token", accessToken)
+                .expect().defaultParser(Parser.JSON)
+                .when()
+                .get("https://rahulshettyacademy.com/getCourse.php").as(GetCoursePage.class);
 
         System.out.println(gc.getLinkedin());
 
@@ -327,7 +412,16 @@ public class APIMaxTrainingTest extends BaseTest {
         l.setLng(33.427362);
         p.setLocation(l);
 
-        Response response = given().queryParam("key", "qaclick123").body(p).when().post("/maps/api/place/add/json").then().assertThat().statusCode(200).extract().response();
+        Response response = given()
+                .queryParam("key", "qaclick123")
+                .body(p)
+                .when()
+                .post("/maps/api/place/add/json")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .response();
 
         String responseToString = response.asString();
         System.out.println(responseToString);
@@ -356,13 +450,26 @@ public class APIMaxTrainingTest extends BaseTest {
         l.setLng(33.427362);
         p.setLocation(l);
 
-        RequestSpecification reqSpec = new RequestSpecBuilder().setContentType(ContentType.JSON).setBaseUri("https://rahulshettyacademy.com").addQueryParam("key", "qaclick123").build();
+        RequestSpecification reqSpec = new RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
+                .setBaseUri("https://rahulshettyacademy.com")
+                .addQueryParam("key", "qaclick123")
+                .build();
 
-        ResponseSpecification resSpec = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
+        ResponseSpecification resSpec = new ResponseSpecBuilder()
+                .expectStatusCode(200)
+                .expectContentType(ContentType.JSON)
+                .build();
 
         RequestSpecification response = given().spec(reqSpec).body(p);
 
-        Response res = response.when().post("/maps/api/place/add/json").then().spec(resSpec).extract().response();
+        Response res = response
+                .when()
+                .post("/maps/api/place/add/json")
+                .then()
+                .spec(resSpec)
+                .extract()
+                .response();
 
         String responseToString = res.asString();
         System.out.println(responseToString);
@@ -382,6 +489,7 @@ public class APIMaxTrainingTest extends BaseTest {
         loginRequestPage.setUserPassword("mL7ZeigyaUkh@");
 
         RequestSpecification reqLogin = given()
+                .relaxedHTTPSValidation()
                 .log().all()
                 .spec(req)
                 .body(loginRequestPage);
@@ -426,5 +534,60 @@ public class APIMaxTrainingTest extends BaseTest {
         JsonPath js = new JsonPath(addProductResponse);
         String productId = js.get("productId");
         String message = js.get("message");
+
+        /*Create order based on a product*/
+        RequestSpecification createOrderBaseReq = new RequestSpecBuilder()
+                .setBaseUri("https://rahulshettyacademy.com")
+                .addHeader("Authorization", token)
+                .setContentType(ContentType.JSON)
+                .build();
+
+        OrderDetail orderDetail = new OrderDetail(getDriver());
+        orderDetail.setCountry("USA");
+        orderDetail.setProductOrderId(productId);
+
+        List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
+        orderDetailList.add(orderDetail);
+
+        Orders orders = new Orders(getDriver());
+        orders.setOrders(orderDetailList);
+
+        RequestSpecification createOrderReq = given()
+                .log().all()
+                .spec(createOrderBaseReq)
+                .body(orders);
+
+        String responseAddOrder = createOrderReq
+                .when()
+                .post("/api/ecom/order/create-order")
+                .then()
+                .log().all()
+                .extract().response().asString();
+
+        System.out.println(responseAddOrder);
+
+
+        /*Delete Product*/
+        RequestSpecification deleteProductBaseReq = new RequestSpecBuilder()
+                .setBaseUri("https://rahulshettyacademy.com")
+                .addHeader("Authorization", token)
+                .setContentType(ContentType.JSON)
+                .build();
+
+        RequestSpecification deleteProductReq = given()
+                .log().all()
+                .spec(deleteProductBaseReq)
+                .pathParam("productId", productId);
+
+        String deleteProductResponse = deleteProductReq
+                .when()
+                .delete("/api/ecom/product/delete-product/{productId}")
+                .then()
+                .log().all()
+                .extract().response().asString();
+
+        JsonPath js1 = new JsonPath(deleteProductResponse);
+
+        Assert.assertEquals("Product Deleted Successfully", js1.get("message"));
     }
 }
