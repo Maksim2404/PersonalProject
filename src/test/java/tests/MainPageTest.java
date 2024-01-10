@@ -34,9 +34,20 @@ public class MainPageTest extends BaseTest {
 
         System.out.println(pageTitle);
 
-        WebDriverWait  webDriverWait = new WebDriverWait(getDriver(), Duration.ofSeconds(15));
+        WebDriverWait webDriverWait = new WebDriverWait(getDriver(), Duration.ofSeconds(15));
         webDriverWait.until(ExpectedConditions.titleContains(pageTitle));
 
         Assertions.assertThat(pageTitle).isEqualTo("KraftyLab | Fun Virtual Corporate Events Company");
+    }
+
+    @Test
+    public void checkQuantityElementsFromHeaderMenuTest() {
+
+        final int expectedQuantityOfHeaderMenuElements = 7;
+
+        MainPage mainPage = new MainPage(getDriver());
+        int actualQuantityOfElements = mainPage.checkQuantityOfAllHeaderMenuElements();
+
+        Assertions.assertThat(actualQuantityOfElements).isEqualTo(expectedQuantityOfHeaderMenuElements);
     }
 }

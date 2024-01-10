@@ -16,7 +16,7 @@ public abstract class BaseTest {
 
     private WebDriver driver;
     private WebDriverWait webDriverWait;
-    private final static String BASE_URL = "https://www.kraftylab.com/";
+    private final static String BASE_URL = "https://highresbio.com/";
 
     public static String getBaseUrl() {
 
@@ -31,7 +31,7 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void beforeMethod(Method method, ITestResult result) {
         driver = BaseUtils.createDriver();
-        /*openBaseUrl();*/
+        openBaseUrl();
 
         Reporter.log(ReportUtils.END_LINE, true);
         Reporter.log("TEST RUN", true);

@@ -179,12 +179,21 @@ public class APIMaxTrainingTest extends BaseTest {
                 .extract()
                 .response().asString();
 
+        System.out.println(response);
+
         /*Add comment implementation*/
         given()
                 .pathParam("id", "10005")
                 .log().all()
                 .header("Content-Type", "application/json")
-                .body("{\n" + "    \"body\": \"This is my first comment!\",\n" + "    \"visibility\": {\n" + "        \"type\": \"role\",\n" + "        \"value\": \"Administrators\"\n" + "    }\n" + "}")
+                .body("""
+                        {
+                            "body": "This is my first comment!",
+                            "visibility": {
+                                "type": "role",
+                                "value": "Administrators"
+                            }
+                        }""")
                 .filter(session).when().post("/rest/api/2/issue/{id}/comment")
                 .then()
                 .log().all()
@@ -209,6 +218,8 @@ public class APIMaxTrainingTest extends BaseTest {
                 .log().all()
                 .extract()
                 .response().asString();
+
+        System.out.println(response);
 
         /*Add attachment implementation*/
         given()
@@ -240,6 +251,8 @@ public class APIMaxTrainingTest extends BaseTest {
                 .extract()
                 .response()
                 .asString();
+
+        System.out.println(response);
 
         String expectedMessage = "Hi, How are you?";
 
@@ -378,7 +391,7 @@ public class APIMaxTrainingTest extends BaseTest {
         }
 
         /*Get Courses name of webAutomation*/
-        ArrayList<String> a = new ArrayList<String>();
+        ArrayList<String> a = new ArrayList<>();
 
         List<WebAutomationPage> w = gc.getCourses().getWebAutomation();
         for (int j = 0; j < w.size(); j++) {
@@ -520,7 +533,7 @@ public class APIMaxTrainingTest extends BaseTest {
                 .param("productCategory", "fashion")
                 .param("productSubCategory", "shirts")
                 .param("productPrice", "11500")
-                .param("productDescription", "Addias Originals")
+                .param("productDescription", "Adidas Originals")
                 .param("productFor", "women")
                 .multiPart("productImage", new File("/C:/Users/Maksim Meleshkin/Desktop/Personal/Personal photo/photo_2023-11-01_15-21-52.jpg"));
 
@@ -546,7 +559,7 @@ public class APIMaxTrainingTest extends BaseTest {
         orderDetail.setCountry("USA");
         orderDetail.setProductOrderId(productId);
 
-        List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
+        List<OrderDetail> orderDetailList = new ArrayList<>();
         orderDetailList.add(orderDetail);
 
         Orders orders = new Orders(getDriver());
