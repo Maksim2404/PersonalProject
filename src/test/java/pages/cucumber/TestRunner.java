@@ -1,0 +1,12 @@
+package pages.cucumber;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+
+@CucumberOptions(
+        features = "src/test/java/pages/cucumber/features",
+        glue = "pages.cucumber.stepDefinition",
+        plugin = {"pretty", "html:target/cucumber-reports.html"},
+        monochrome = true)
+public class TestRunner extends AbstractTestNGCucumberTests {
+}
