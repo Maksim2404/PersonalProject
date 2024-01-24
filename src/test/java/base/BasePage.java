@@ -8,9 +8,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class BasePage {
     private final WebDriver driver;
@@ -289,5 +292,31 @@ public abstract class BasePage {
     public void switchToExternalPage() {
         switchToAnotherWindow();
         getWait20().until(ExpectedConditions.numberOfWindowsToBe(2));
+    }
+
+    public WebElement getDynamicElement(String xpathTemplate, String... values) {
+        String xpath = createDynamicXpath(xpathTemplate, values);
+        return driver.findElement(By.xpath(xpath));
+    }
+
+    private String createDynamicXpath(String xpathTemplate, String... values) {
+        Pattern pattern = Pattern.compile("\\{\\w+\\}");
+        Matcher matcher = pattern.matcher(xpathTemplate);
+
+        StringBuffer sb = new StringBuffer();
+        int valueIndex = 0;
+        while (matcher.find()) {
+            if (valueIndex >= values.length) {
+                throw new IllegalArgumentException("Not enough values provided for the placeholders");
+            }
+            matcher.appendReplacement(sb, values[valueIndex++]);
+        }
+        matcher.appendTail(sb);
+
+        if (valueIndex < values.length) {
+            throw new IllegalArgumentException("Too many values provided for the placeholders");
+        }
+
+        return sb.toString();
     }
 }

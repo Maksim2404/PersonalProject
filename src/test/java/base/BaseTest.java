@@ -1,6 +1,7 @@
 package base;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -65,4 +66,20 @@ public abstract class BaseTest {
         getDriver().navigate().to(getBaseUrl());
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(25));
     }
+
+    protected void closePopupIfPresent() {
+
+        WebElement closePopUpButton = getDriver().findElement(By.xpath("//div[@id='onetrust-banner-sdk']//button[contains(@class, 'banner-close-button')]"));
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(closePopUpButton));
+            closeButton.click();
+            System.out.println("Popup closed successfully.");
+        } catch (TimeoutException e) {
+            System.out.println("Popup was not present or not clickable within 10 seconds.");
+        } catch (WebDriverException e) {
+            System.out.println("Error occurred while trying to close the popup: " + e.getMessage());
+        }
+    }
+
 }

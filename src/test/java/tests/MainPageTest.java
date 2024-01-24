@@ -2,6 +2,7 @@ package tests;
 
 import base.BaseTest;
 import org.assertj.core.api.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -31,5 +32,22 @@ public class MainPageTest extends BaseTest {
         int actualQuantityOfElements = mainPage.checkQuantityOfAllHeaderMenuElements();
 
         Assertions.assertThat(actualQuantityOfElements).isEqualTo(expectedQuantityOfHeaderMenuElements);
+    }
+
+    @Test
+    public void changeLocationFromHeaderMenu() {
+
+        String location = "Germany";
+
+        closePopupIfPresent();
+
+        MainPage mainPage = new MainPage(getDriver());
+        mainPage
+                .clickLocationDropDownMenu()
+                .inputValueToLocationSearchField(location)
+                .selectGeneratedLocationFromDropDownMenu(location);
+
+        String pageTextContent = getDriver().findElement(By.tagName("body")).getText();
+        Assertions.assertThat(pageTextContent).as("Check if the page contains the expected text").contains(location);
     }
 }
