@@ -16,7 +16,7 @@ public abstract class BaseTest {
 
     private WebDriver driver;
     private WebDriverWait webDriverWait;
-    private final static String BASE_URL = "https://highresbio.com/";
+    private final static String BASE_URL = "https://www.yusen-logistics.com/us_en/";
 
     public static String getBaseUrl() {
 

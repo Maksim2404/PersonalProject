@@ -12,7 +12,7 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//li//a[text()='Browse Languages']")
     private WebElement browseLanguagesTab;
 
-    @FindBy(xpath = "//ul[@id='primary-menu']/li[contains(@class, 'menu-item')]")
+    @FindBy(xpath = "(//div[@class='header-navigation']//ul[contains(@class, 'main-navigation-ul')])[1]/li[contains(@class, 'main-navigation-li')]")
     private List<WebElement> listOfElementsFromHeaderMenu;
 
     public MainPage(WebDriver driver) {

@@ -463,7 +463,7 @@ public class APIMaxTrainingTest extends BaseTest {
         l.setLng(33.427362);
         p.setLocation(l);
 
-        RequestSpecification reqSpec = new RequestSpecBuilder()
+        RequestSpecification req = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .setBaseUri("https://rahulshettyacademy.com")
                 .addQueryParam("key", "qaclick123")
@@ -474,9 +474,9 @@ public class APIMaxTrainingTest extends BaseTest {
                 .expectContentType(ContentType.JSON)
                 .build();
 
-        RequestSpecification response = given().spec(reqSpec).body(p);
+        RequestSpecification res = given().spec(req).body(p);
 
-        Response res = response
+        Response response = res
                 .when()
                 .post("/maps/api/place/add/json")
                 .then()
@@ -484,7 +484,7 @@ public class APIMaxTrainingTest extends BaseTest {
                 .extract()
                 .response();
 
-        String responseToString = res.asString();
+        String responseToString = response.asString();
         System.out.println(responseToString);
     }
 
