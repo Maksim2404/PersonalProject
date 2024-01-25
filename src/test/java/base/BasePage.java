@@ -78,7 +78,7 @@ public abstract class BasePage {
     }
 
     protected List<String> getTexts(List<WebElement> list) {
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             getWait20().until(ExpectedConditions.visibilityOfAllElements(list));
             List<String> textList = new ArrayList<>();
             for (WebElement element : list) {
@@ -217,7 +217,7 @@ public abstract class BasePage {
     }
 
     protected void waitForTextNotToBeEmpty(WebElement element) {
-        while (element.getText() == null || element.getText().length() < 1) {
+        while (element.getText() == null || element.getText().isEmpty()) {
             getWait20().until(ExpectedConditions
                     .not(ExpectedConditions.textToBePresentInElement(element, "")));
         }

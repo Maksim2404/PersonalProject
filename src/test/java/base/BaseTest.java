@@ -33,6 +33,7 @@ public abstract class BaseTest {
     protected void beforeMethod(Method method, ITestResult result) {
         driver = BaseUtils.createDriver();
         openBaseUrl();
+        closePopupIfPresent();
 
         Reporter.log(ReportUtils.END_LINE, true);
         Reporter.log("TEST RUN", true);
@@ -69,7 +70,8 @@ public abstract class BaseTest {
 
     protected void closePopupIfPresent() {
 
-        WebElement closePopUpButton = getDriver().findElement(By.xpath("//div[@id='onetrust-banner-sdk']//button[contains(@class, 'banner-close-button')]"));
+        WebElement closePopUpButton = getDriver().findElement(
+                By.xpath("//div[@id='onetrust-banner-sdk']//button[contains(@class, 'banner-close-button')]"));
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(closePopUpButton));
@@ -81,5 +83,4 @@ public abstract class BaseTest {
             System.out.println("Error occurred while trying to close the popup: " + e.getMessage());
         }
     }
-
 }

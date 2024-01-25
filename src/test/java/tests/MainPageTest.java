@@ -37,9 +37,7 @@ public class MainPageTest extends BaseTest {
     @Test
     public void changeLocationFromHeaderMenu() {
 
-        String location = "Germany";
-
-        closePopupIfPresent();
+        final String location = MainPage.generateRandomLocation();
 
         MainPage mainPage = new MainPage(getDriver());
         mainPage

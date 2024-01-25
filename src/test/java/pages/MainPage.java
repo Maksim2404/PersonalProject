@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.Random;
 
 public class MainPage extends BasePage {
 
@@ -42,9 +43,22 @@ public class MainPage extends BasePage {
 
     public MainPage selectGeneratedLocationFromDropDownMenu(String generatedElement) {
 
-        WebElement dynamicElement = getDynamicElement("//ul[@class='selector-input-options']//li//span[text()='{placeholder}']", generatedElement);
+        WebElement dynamicElement = getDynamicElement(
+                "//ul[@class='selector-input-options']//li//span[text()='{placeholder}']", generatedElement);
 
         click(dynamicElement);
         return this;
+    }
+
+    public static String generateRandomLocation() {
+
+        String[] locations =
+                {
+                        "Germany", "Global", "Argentina"
+                };
+
+        Random random = new Random();
+        int index = random.nextInt(locations.length);
+        return locations[index];
     }
 }
