@@ -73,8 +73,7 @@ public abstract class BaseTest {
         WebElement closePopUpButton = getDriver().findElement(
                 By.xpath("//div[@id='onetrust-banner-sdk']//button[contains(@class, 'banner-close-button')]"));
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(closePopUpButton));
+            WebElement closeButton = getWait().until(ExpectedConditions.elementToBeClickable(closePopUpButton));
             closeButton.click();
             System.out.println("Popup closed successfully.");
         } catch (TimeoutException e) {
