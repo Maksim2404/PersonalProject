@@ -30,8 +30,10 @@ import pages.api.pojo.deserialization.GetCoursePage;
 import pages.api.pojo.deserialization.WebAutomationPage;
 import pages.api.serialization.AddPlacePage;
 import pages.api.serialization.LocationPage;
+import pages.dataDrivenTesting.DataDriven;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -162,13 +164,17 @@ public class APIMaxTrainingTest extends BaseTest {
     }
 
     @Test
-    public void addBookTestHashMapToJson() {
+    public void addBookTestHashMapToJson() throws IOException {
+
+        DataDriven d = new DataDriven(getDriver());
+        ArrayList<String> data = d.getData("RestAddBook", "RestAssured");
+
 
         HashMap<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("name", "RestAssured");
-        jsonAsMap.put("isbn", "ISBNValue");
-        jsonAsMap.put("aisle", "123");
-        jsonAsMap.put("author", "Maksim");
+        jsonAsMap.put("name", data.get(1));
+        jsonAsMap.put("isbn", data.get(2));
+        jsonAsMap.put("aisle", data.get(3));
+        jsonAsMap.put("author", data.get(4));
 
         /*If it's a nested JSON, you will need to create a nested HashMap
         HashMap<String, Object> map = new HashMap<>();

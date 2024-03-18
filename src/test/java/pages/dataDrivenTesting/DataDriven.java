@@ -19,7 +19,7 @@ public class DataDriven extends BasePage {
         super(driver);
     }
 
-    public ArrayList<String> getData(String testCaseName) throws IOException {
+    public ArrayList<String> getData(String testCaseName, String sheetName) throws IOException {
 
         ArrayList<String> arrayList = new ArrayList<>();
 
@@ -31,7 +31,7 @@ public class DataDriven extends BasePage {
         int numberOfSheets = xssfWorkbook.getNumberOfSheets();
 
         for (int i = 0; i < numberOfSheets; i++) {
-            if (xssfWorkbook.getSheetName(i).equalsIgnoreCase("testdata")) {
+            if (xssfWorkbook.getSheetName(i).equalsIgnoreCase(sheetName)) {
                 XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(i);
 
                 /*Task1 - Identify Testcases column by scanning the entire 1st row*/

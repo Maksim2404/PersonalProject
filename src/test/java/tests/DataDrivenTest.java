@@ -15,7 +15,7 @@ public class DataDrivenTest extends BaseTest {
         String testCaseName = "Add Profile";
 
         DataDriven dataDriven = new DataDriven(getDriver());
-        ArrayList<String> data = dataDriven.getData(testCaseName);
+        ArrayList<String> data = dataDriven.getData(testCaseName, "testdata");
 
         System.out.println(data.get(0));
         System.out.println(data.get(1));
