@@ -32,8 +32,8 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void beforeMethod(Method method, ITestResult result) {
         driver = BaseUtils.createDriver();
-        openBaseUrl();
-        closePopupIfPresent();
+        /*openBaseUrl();
+        closePopupIfPresent();*/
 
         Reporter.log(ReportUtils.END_LINE, true);
         Reporter.log("TEST RUN", true);
