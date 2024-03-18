@@ -34,6 +34,7 @@ import pages.api.serialization.LocationPage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -144,9 +145,51 @@ public class APIMaxTrainingTest extends BaseTest {
 
         RestAssured.baseURI = "http://216.10.245.166";
 
-        String response = given().log().all().header("Content-Type", "application/json").body(Payloads.addBook(isbn, aisle)).when().post("/Library/Addbook.php").then().log().all().assertThat().statusCode(200).extract().response().asString();
+        String response = given()
+                .log().all()
+                .header("Content-Type", "application/json")
+                .body(Payloads.addBook(isbn, aisle))
+                .when()
+                .post("/Library/Addbook.php")
+                .then()
+                .log().all()
+                .assertThat().statusCode(200)
+                .extract().response().asString();
 
         JsonPath js = ReUsableMethods.rawToJson(response);
+        String id = js.get("ID");
+        System.out.println(id);
+    }
+
+    @Test
+    public void addBookTestHashMapToJson() {
+
+        HashMap<String, Object> jsonAsMap = new HashMap<>();
+        jsonAsMap.put("name", "RestAssured");
+        jsonAsMap.put("isbn", "ISBNValue");
+        jsonAsMap.put("aisle", "123");
+        jsonAsMap.put("author", "Maksim");
+
+        /*If it's a nested JSON, you will need to create a nested HashMap
+        HashMap<String, Object> map = new HashMap<>();
+        jsonAsMap.put("lat", "12321");
+        jsonAsMap.put("lng", "53251");
+        jsonAsMap.put("location", map);*/
+
+        RestAssured.baseURI = "http://216.10.245.166";
+
+        Response response = given()
+                .log().all()
+                .header("Content-Type", "application/json")
+                .body(jsonAsMap)
+                .when()
+                .post("/Library/Addbook.php")
+                .then()
+                .log().all()
+                .assertThat().statusCode(200)
+                .extract().response();
+
+        JsonPath js = ReUsableMethods.rawToJson(String.valueOf(response));
         String id = js.get("ID");
         System.out.println(id);
     }
